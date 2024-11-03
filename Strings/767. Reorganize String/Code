@@ -1,0 +1,32 @@
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        hm = Counter(s)
+
+        mh = [[-v, k] for k,v in hm.items()]
+        heapq.heapify(mh)
+
+        prev = None
+        res = ""
+
+        while mh or prev:
+            if prev and not mh:
+                return ""
+
+            val = heapq.heappop(mh)
+
+            res += val[1]
+            
+            cnt = 1 + val[0]
+            if prev:
+                heapq.heappush(mh, prev)
+                prev = None
+            if cnt != 0:
+                prev = [cnt, val[1]]
+        
+        return res
+        
+
+
+
+
+
