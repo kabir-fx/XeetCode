@@ -1,0 +1,17 @@
+class Solution:
+    def compressedString(self, word: str) -> str:
+        i, l = 0, len(word)
+        res = ""
+
+        while i < l:
+            cnt = 0
+            cur = word[i]
+
+            while i<l and word[i] == cur and cnt < 9:
+                cnt += 1
+                i += 1
+
+            res += str(cnt)
+            res += cur
+
+        return res 
