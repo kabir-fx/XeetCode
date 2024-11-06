@@ -1,0 +1,12 @@
+# Write your MySQL query statement below
+WITH CTE AS (
+    SELECT managerId , COALESCE(COUNT(MANAGERID),0) AS C
+    FROM EMPLOYEE 
+    GROUP BY MANAGERID 
+    HAVING C >= 5
+)
+
+SELECT name
+FROM CTE C
+JOIN EMPLOYEE E
+ON C.managerId = E.ID 
