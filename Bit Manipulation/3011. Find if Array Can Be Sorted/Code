@@ -1,0 +1,20 @@
+class Solution:
+    def canSortArray(self, nums: List[int]) -> bool:
+        
+        def coun(n):
+            return bin(n).count("1")
+        
+        cur_min, cur_max = nums[0], nums[0]
+        prev_max = float("-inf")
+
+        for i in nums:
+            if coun(i) == coun(cur_min):
+                cur_min, cur_max = min(cur_min, i), max(cur_max, i)            
+            else:
+                if prev_max > cur_min:
+                    return False
+                
+                prev_max = cur_max
+                cur_min, cur_max = i, i
+
+        return cur_min > prev_max
