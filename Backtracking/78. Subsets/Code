@@ -1,0 +1,21 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        sub = []
+
+        def dfs(i):
+            # Base case for recursion
+            if i >= len(nums):
+                res.append(sub.copy())
+                return
+            
+            # Including the i position in nums
+            sub.append(nums[i])
+            dfs(i+1)
+
+    	    # Excluding the i element
+            sub.pop()
+            dfs(i+1)
+        
+        dfs(0)
+        return res
