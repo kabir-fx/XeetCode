@@ -1,0 +1,38 @@
+class Solution:
+    def primeSubOperation(self, nums: List[int]) -> bool:
+        # Intuition is to use greedy approach to select the min possible after prime subtraction and then check the no prev it, if it is sorted then move forward else return False
+        
+        # Funct to identify prime.
+        def is_p(a):
+            for i in range(2, int(sqrt(a))+1):
+                if a%i ==0:
+                    return False
+            
+            return True
+        
+        # Var to store the prev value; Initiated as 0 for index=0
+        prev = 0
+
+        # Iterating thru all the nums to find their smallest value
+        for n in nums:
+            # Variable to store the largest prime no which will then be used to subtract from respective num.
+            larg = 0
+
+            # Prime no/larg should be greater than prev no. 
+            upper_bound = n - prev
+
+            # Iterating thru all the values in reversed coz we need to find the largest prime
+            for j in reversed(range(2, upper_bound)):
+                if is_p(j):
+                    # if prime is found loop breaks
+                    larg = j
+                    break
+            
+            # A/Q current num should always be greater than prev.
+            if n - larg <= prev:
+                return False
+            
+            prev = n - larg
+        
+        return True
+        
