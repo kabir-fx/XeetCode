@@ -13,7 +13,7 @@ class Solution:
             else:
                 if prev_max > cur_min:
                     return False
-                
+                // Hry
                 prev_max = cur_max
                 cur_min, cur_max = i, i
 
