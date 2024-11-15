@@ -1,30 +1,40 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        ROW, COL = len(board), len(board[0])
-        path = set()
+        # The intuition is to first traverse accross whole board searching for the  first match and when its found replace it with # along with other condition checks if we find a match then the result returns true and if we doont then the orginal is then replaced back to its position for the cases when the word does not match and need forther patrolling. 
+        row, col = len(board), len(board[0])
 
         def baxk(r, c, i):
-            if i == len(word): return True
-
-            if (r < 0 or c < 0 or
-                r >= ROW or c >= COL or
-                (r, c) in path or
-                board[r][c] != word[i]):
+            if i == len(word):
+                return True
+            
+            # Conditions which will only allow a char to pass thru if its a match
+            if (c == col or r == row or
+                r < 0 or c < 0 or
+                word[i] != board[r][c] or
+                board[r][c] == '#'):
                 return False
             
-            path.add((r, c))
-            res = (
-                baxk(r + 1, c, i + 1) or
-                baxk(r - 1, c, i + 1) or
-                baxk(r, c + 1, i + 1) or
-                baxk(r, c - 1, i + 1)
-            )
+            # At this if a word has passed we are certain its a match
 
-            path.remove((r,c))
+            # We replace that word at its position with # such that if we visit it again we get false
+            board[r][c] = "#"
+            
+            # Conditions to check whole 360 around the current word to find another match
+            res = (baxk(r+1,c, i + 1) or
+                   baxk(r-1,c, i + 1) or
+                   baxk(r, c + 1, i + 1) or
+                   baxk(r, c - 1, i + 1))       
+            
+            # replace the word back to its orgnal position 
+            board[r][c] = word[i]
+
             return res
 
-        for i in range(ROW):
-            for j in range(COL):
-                if baxk(i, j, 0): return True
+        for r in range(row):
+            for c in range(col):
+                # Hunt thru all the position in search for the word.
+                if baxk(r, c, 0):
+                    return True
         
         return False
+
