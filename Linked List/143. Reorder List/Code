@@ -1,0 +1,37 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # Find the half
+        l,r = head, head.next
+
+        while r and r.next:
+            l = l.next
+            r = r.next.next
+        
+        # Reversing 2 half
+        cur = l.next
+        prev = l.next = None
+        
+        while cur:
+            t = cur.next
+            prev, cur.next = cur, prev
+            cur = t
+        
+        l,r = head, prev
+        # Start working
+        while r:
+            t1, t2 = l.next, r.next
+            l.next = r
+            l = r.next = t1
+            r = t2
+        
+        return head
+
+
