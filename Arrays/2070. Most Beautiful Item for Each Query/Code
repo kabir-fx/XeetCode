@@ -1,23 +1,20 @@
 class Solution:
     def maximumBeauty(self, items: List[List[int]], queries: List[int]) -> List[int]:
-        # The intuition is to first sort the 2 lists, then use 2 pointer approach
-
+        # Intuition is to use 2 pointer approach on both lists but we need to return queries in orignal order in which they are given.
+        
         items.sort()
-        queries = sorted((value, index) for index, value in enumerate(queries))
-        
-        res = [0] * len(queries)
 
-        mx = 0 
-        item_index = 0
-        
-        # Process each query keeping track of the original indices
-        for query_value, original_index in queries:
-            # Update mx while item sizes are less than or equal to the current query size
-            while item_index < len(items) and items[item_index][0] <= query_value:
-                mx = max(mx, items[item_index][1])
-                item_index += 1
-            # Assign the found maximum beauty to the corresponding position in the result list
-            res[original_index] = mx
-        
-        return res
+        q_i = sorted((q, i) for i,q in enumerate(queries))
+
+        res = [0] * len(queries)
+        mx = 0
+        i = 0
+        for q, idx in q_i:
+            while i < len(items) and items[i][0] <= q:
+                mx = max(mx, items[i][1])
+                i += 1
             
+            res[idx] = mx
+
+        return res
+
