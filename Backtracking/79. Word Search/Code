@@ -13,7 +13,8 @@ class Solution:
                 word[i] != board[r][c] or
                 board[r][c] == '#'):
                 return False
-            
+
+
             # At this if a word has passed we are certain its a match
 
             # We replace that word at its position with # such that if we visit it again we get false
