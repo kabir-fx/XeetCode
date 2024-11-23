@@ -1,62 +1,71 @@
 class Solution:
-    def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
+    def countUnguarded(self, m: int, n: int, gaurds: List[List[int]], walls: List[List[int]]) -> int:
+        # Intuition is to mark all the spaces in matrix with the nomeclature given below and at the count only 0.
+        # Nomeclature
+        # 0 -> free; 1 -> gaurd; 2 -> wall; 3 -> gaurded
+
+        # Initialize a grid
         grid = [[0] * n for _ in range(m)]
-        # 0 -> free; 1 -> guard; 2 -> wall; 3 -> guarded
-
-        # Place guards and walls in the grid
-        for r, c in guards:
+        
+        # Mark all the gaurds
+        for r,c in gaurds:
             grid[r][c] = 1
-        for r, c in walls:
+        
+        # Mark all the walls
+        for r,c in walls:
             grid[r][c] = 2
+        
+        # Now iterate thru all elements and mark the position as gaurded first for all the rows in both directions and then for col also in both directions
 
-        # Directional sweeps for guarding cells
+        # For Rows
         for r in range(m):
-            # Left-to-right
-            guarded = False
+            # Left to Right
+            gaurded = False
             for c in range(n):
-                if grid[r][c] == 1:  # Guard found
-                    guarded = True
-                elif grid[r][c] == 2:  # Wall found
-                    guarded = False
-                elif guarded:
-                    grid[r][c] = 3  # Mark as guarded
+                if grid[r][c] == 1:
+                    gaurded = True
+                elif grid[r][c] == 2:
+                    gaurded = False
+                elif gaurded:
+                    grid[r][c] = 3
 
-            # Right-to-left
-            guarded = False
+            # Right to Left
+            gaurded = False
             for c in reversed(range(n)):
-                if grid[r][c] == 1:  # Guard found
-                    guarded = True
-                elif grid[r][c] == 2:  # Wall found
-                    guarded = False
-                elif guarded:
-                    grid[r][c] = 3  # Mark as guarded
-
+                if grid[r][c] == 1:
+                    gaurded = True
+                elif grid[r][c] == 2:
+                    gaurded = False
+                elif gaurded:
+                    grid[r][c] = 3
+        
+        # For col
         for c in range(n):
-            # Top-to-bottom
-            guarded = False
+            # Top to bottom
+            gaurded = False
             for r in range(m):
-                if grid[r][c] == 1:  # Guard found
-                    guarded = True
-                elif grid[r][c] == 2:  # Wall found
-                    guarded = False
-                elif guarded:
-                    grid[r][c] = 3  # Mark as guarded
+                if grid[r][c] == 1:
+                    gaurded = True
+                elif grid[r][c] == 2:
+                    gaurded = False
+                elif gaurded:
+                    grid[r][c] = 3
 
-            # Bottom-to-top
-            guarded = False
+            # Right to Left
+            gaurded = False
             for r in reversed(range(m)):
-                if grid[r][c] == 1:  # Guard found
-                    guarded = True
-                elif grid[r][c] == 2:  # Wall found
-                    guarded = False
-                elif guarded:
-                    grid[r][c] = 3  # Mark as guarded
+                if grid[r][c] == 1:
+                    gaurded = True
+                elif grid[r][c] == 2:
+                    gaurded = False
+                elif gaurded:
+                    grid[r][c] = 3
 
-        # Count unguarded cells
+        # Final Iteration
         res = 0
         for r in range(m):
             for c in range(n):
-                if grid[r][c] == 0:  # Free and unguarded
+                if grid[r][c] == 0:
                     res += 1
 
-        return res
+        return res 
