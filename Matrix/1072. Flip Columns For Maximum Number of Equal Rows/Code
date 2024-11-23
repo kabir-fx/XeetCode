@@ -1,0 +1,13 @@
+class Solution:
+    def maxEqualRowsAfterFlips(self, matrix: List[List[int]]) -> int:
+        hm = defaultdict(int)
+
+        for row in matrix:
+            row_tup = tuple(row)
+
+            if row[0]:
+                row_tup = tuple(0 if n else 1 for n in row)
+            
+            hm[row_tup] += 1
+        
+        return max(hm.values())
