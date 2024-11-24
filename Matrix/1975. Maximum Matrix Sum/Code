@@ -1,0 +1,19 @@
+class Solution:
+    def maxMatrixSum(self, matrix: List[List[int]]) -> int:
+        res, m = 0, float("inf")
+        cnt = 0
+
+        ROW, COL = len(matrix), len(matrix[0])
+
+        for r in range(ROW):
+            for c in range(COL):
+                if matrix[r][c] < 0:
+                    cnt += 1
+                res += abs(matrix[r][c])
+                m = min(m, abs(matrix[r][c]))
+        
+        if cnt % 2 == 0:
+            return res
+        else:
+            return res - 2*m
+
