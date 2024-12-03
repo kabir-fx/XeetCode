@@ -1,0 +1,20 @@
+class Solution:
+    def addSpaces(self, s: str, spaces: List[int]) -> str:
+
+        # Intuition is to iterate over all the s and keep appending to a resultant list, whenever the index matches with the no in spaces append " ".
+
+        # To measure spaces
+        space_index = 0
+        res = []
+
+        for i in range(len(s)):
+            # Check to find if we match with the values in spaces
+            if space_index < len(spaces) and i == spaces[space_index]:
+                res.append(" ")
+
+                space_index += 1
+            
+            # Append the strinf character regardless
+            res.append(s[i])
+        
+        return "".join(res)
