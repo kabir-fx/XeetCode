@@ -1,0 +1,21 @@
+class Solution:
+    def maximumBeauty(self, nums: List[int], k: int) -> int:
+
+        # Intiution is to use sliding win to only increment r when  the diff b/w l and r is greater than 2k coz the diff of just k is not correct.
+
+        res = 0
+
+        # Sort the array in order to group like minded elements
+        nums.sort()
+
+        # Intialize sliding window
+        l = 0
+
+        for r in range(len(nums)):
+
+            if nums[r] - nums[l] > 2*k:
+                l += 1
+
+            res = max(res, r - l + 1)
+        
+        return res
