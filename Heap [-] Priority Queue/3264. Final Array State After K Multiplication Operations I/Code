@@ -1,0 +1,14 @@
+class Solution:
+    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
+        res = nums[::]
+
+        dum = [[n,i] for i,n in enumerate(nums)]
+        heapq.heapify(dum)
+
+        for _ in range(k):
+            val, idx = heapq.heappop(dum)
+            res[idx] *= multiplier  
+
+            heapq.heappush(dum, [res[idx], idx])
+        
+        return res
