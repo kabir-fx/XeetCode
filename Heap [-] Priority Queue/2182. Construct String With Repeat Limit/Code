@@ -1,0 +1,33 @@
+class Solution:
+    def repeatLimitedString(self, s: str, repeatLimit: int) -> str:
+        # Intuition is to use a max heap to store the char with hoghest ASCII values and appending the min of char count and limit provided in question
+        # IF the count is greater than the limit then pop another pair [identify if the count is less 1 by identifyin if the heap is empty or not]
+
+        # Hashmap to store the count and val
+        mp = Counter(s)
+        res = []
+
+        # Intialize max heap with char and count
+        hp = [[-ord(c), cnt] for c,cnt in mp.items()]
+        heapq.heapify(hp)
+
+        while hp:
+            cur_char, cur_cnt = heapq.heappop(hp)
+            cur_char = chr(-cur_char)
+            min_cnt = min(cur_cnt, repeatLimit)
+
+            res.append(cur_char*min_cnt)
+
+            if cur_cnt - min_cnt > 0 and hp:
+                nxt_char, nxt_cnt = heapq.heappop(hp)
+                nxt_char = chr(-nxt_char)
+
+                res.append(nxt_char)
+                
+                heapq.heappush(hp, [-ord(cur_char), cur_cnt - min_cnt])
+
+                # Identify if the count is greater than 1
+                if nxt_cnt > 1:
+                    heapq.heappush(hp, [-ord(nxt_char), nxt_cnt - 1])
+
+        return "".join(res)
