@@ -1,0 +1,20 @@
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        # Intuition is to use a monotonic increasing stack; Before appending to stack we verify the element to be added is not less/equal to top element, if it is then we pop the element and subtract it.
+        
+        res = prices[::]
+
+        # Monotonic increasing stack wich stores indexes.
+        stack = []
+
+        for l in range(len(prices)):
+            # Loop to identify whether the stack is non - empty and the top of the stack is less/equal to current element
+            # Loop coz multiple elements can be present in stack that need removal
+            while stack and prices[stack[-1]] >= prices[l]:
+                j = stack.pop()
+                res[j] -= prices[l]  
+
+            # Lest append to the stack
+            stack.append(l)
+
+        return res
