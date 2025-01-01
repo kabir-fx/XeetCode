@@ -1,0 +1,23 @@
+class Solution:
+    def maxScore(self, s: str) -> int:
+        # Intuition is to declare 2 variables storing count of each digit, first classify all digits to hv only the count of 1 and then for each character incriment/ check for only zeroes
+        z,o = 0,0
+        res = 0
+
+        # Traditional
+        # for c in s:
+        #     if c == "1":
+        #         o += 1
+
+        # Modern 
+        o = s.count("1") 
+        
+        # Loop to identify 0's
+        for c in range(len(s) -1):
+            if s[c] == "0":
+                z += 1
+            else:
+                o -= 1
+            res = max(res, z+o)
+
+        return res
