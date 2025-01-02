@@ -1,0 +1,30 @@
+class Solution:
+    def vowelStrings(self, words: List[str], queries: List[List[int]]) -> List[int]:
+        # Intuition is to use a copy arr of len -> words +1, where we eill store the count of each of index starting with 0
+
+        # For each q in queries, we will then append the difference of theri counts upto that point
+
+        # Set to store all vowels
+        vw = set('aeiou')
+
+        # Copy arr to store all counts starting with 0
+        cnt = [0]
+
+        # Count of all the vowels
+        num = 0
+
+        for w in words:
+            if w[0] in vw and w[-1] in vw:
+                num += 1
+
+            cnt.append(num)
+
+        res = []
+
+        for i,q in enumerate(queries):
+            # Advance to extract left and rigth values from [?,?]
+            l,r = q
+            
+            res.append(cnt[r+1] - cnt[l])
+        
+        return res
