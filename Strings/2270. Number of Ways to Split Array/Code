@@ -1,0 +1,20 @@
+class Solution:
+    def waysToSplitArray(self, nums: List[int]) -> int:
+        # Intuition is to create a copy arr consisting of sum of all the elements upto that point
+
+        # WE loop thru all the elements(-1) in nums and then increment the res only when the difference is <= elements at i index.
+        cnt = 0
+
+        cp_nums = []
+
+        for n in nums:
+            cnt += n
+
+            cp_nums.append(cnt)
+
+        res = 0
+        for i in range(len(nums) -1):
+            if cp_nums[i] >= (cp_nums[-1] - cp_nums[i]):
+                res += 1
+        
+        return res
