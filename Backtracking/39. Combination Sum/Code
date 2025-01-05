@@ -25,3 +25,32 @@ class Solution:
         # Return the result after callin the function
         dfs(0, [], 0)
         return res 
+
+
+# APPROACH 2
+
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        # Intuition is to further enhance the approach of subsets by adding the addition condition to check the sum of all elements in sub
+        
+        res = []
+        sub = []
+
+        def dfs(i):
+            # If sum exceeds or out of range
+            if sum(sub) >= target or i == len(nums):
+                if sum(sub) == target:
+                    res.append(sub[::])
+                
+                return
+
+            sub.append(nums[i])
+            # Since the problem allows to use copies of same element, we iterate with same element which can be later updated/removed if sum exceed the target 
+            dfs(i)
+
+            sub.pop()
+            dfs(i+1)
+        
+        dfs(0)
+
+        return res
