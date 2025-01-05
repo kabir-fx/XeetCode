@@ -1,32 +1,37 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        # Intuition is to use a 2 pointer aaprroach on top of the outer loop which only evaluates distinct values 
         res = []
         nums.sort()
 
-        for cnt in range(len(nums) -2):
-            if cnt > 0 and nums[cnt] == nums[cnt -1]:
+        for i, n in enumerate(nums):
+            # Check if duplicate
+            if i > 0 and n == nums[i-1]:
                 continue
             
-            l,r = cnt +1, len(nums) -1
-            
+            l,r = i+1, len(nums) -1
+
             while l < r:
-                tot = nums[l] + nums[r] + nums[cnt]
+                s = nums[l] + nums[r] + n
 
-                if tot == 0:
-                    res.append([nums[l], nums[r], nums[cnt]])
+                if s == 0:
+                    # Appeend the values, not indexes
+                    res.append([n, nums[l], nums[r]])
+
+                    # We need to only update one pointer as the other pointer will automtically be handled by the code
                     l += 1
-                    r -= 1
-                
-                    while l < r and nums[l] == nums[l-1]:
+                    # Check whether we are adding duplicates
+                    while nums[l] == nums[l-1] and l < r:
                         l += 1
-
-                    while l < r and nums[r] == nums[r+1]:
-                        r -= 1
                 
-                elif tot > 0:
+                elif s > 0:
                     r -= 1
+                
                 else:
                     l += 1
         
         return res
-                
+
+
+        # O(n.logn) + O(n^2) ----> O(n^2)
+        # O(1)
