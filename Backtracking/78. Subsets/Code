@@ -1,20 +1,24 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        res = []
+        res = [] 
         sub = []
 
+        # Intuituon is to create a list with all the possible pmc by inlcuding and excluding each element
+
         def dfs(i):
-            # Base case for recursion
-            if i >= len(nums):
-                res.append(sub.copy())
+            # IF the index reaches the threshold append the element to the res and return the function back to upper lvl.
+            if i == len(nums):
+                res.append(sub[::])
                 return
             
-            # Including the i position in nums
+            # Append the element to the sub array
             sub.append(nums[i])
+            # Start the iteration with next element
             dfs(i+1)
 
-    	    # Excluding the i element
+            # Remove the last appended value
             sub.pop()
+            # Start the iteration without that element
             dfs(i+1)
         
         dfs(0)
