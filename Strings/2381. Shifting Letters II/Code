@@ -1,0 +1,34 @@
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
+        # Intuition is to use a Prefix array of len + 1 of s, this array stores the net sum to be added/subtracted from the input resulting in O(n)
+
+        # Works in such a way that: stores the net diff for each iteration(starting with 0), for each val adds the difference for that corresponding element to the arr
+        prefix = [0] * (len(s) +1)
+
+        for l,r,d in shifts:
+            # Since the changes will start reflecting in i-1 of the input arr, tf we update i+1 val
+            prefix[r+1] += 1 if d else -1
+            # -1 at the correct value in order to reverse the changes in the elements outside of the given index
+            prefix[l] += -1 if d else 1
+        
+
+
+        diff = 0
+        # - ord('a') to make all the characters lie in range: 0 - 25
+        res = [ord(c) - ord('a') for c in s]
+
+
+
+        # Till range 1 coz we dont want to change the -1 element of the input array at 0 index
+        for i in reversed(range(1, len(prefix))):
+            diff += prefix[i]
+
+            # %26 to again make sure the range is correct 
+            res[i-1] = (diff + res[i-1]) % 26
+        
+
+        
+        # Reverse the changes done above
+        st = [chr(c + ord('a')) for c in res]
+
+        return "".join(st)
