@@ -1,24 +1,35 @@
 class Solution:
     def combinationSum2(self, nums: List[int], target: int) -> List[List[int]]:
-        res, sub = [], []
+        # Intuition is to use the logic of 3Sum, where we select a distinct element in a sorted a array and keep skipping until we find a distinct element 
+
+        # Sorting allows us to find all the pmc of an element, if we are still unalble to find it or find it we then completely ignore that element and move forward
+        res = []
         nums.sort()
 
-        def baxk(i, total):
-            if total == target:
-                res.append(sub.copy())
-                return
-
-            if total > target or i == len(nums):
+        def dfs(i, cur, tot):
+            if tot == target:
+                res.append(cur.copy())
                 return 
+            if i == len(nums) or tot > target:
+                return
             
-            sub.append(nums[i])
-            baxk(i+1, total + nums[i])
-            sub.pop()
+            cur.append(nums[i])
+            # Start the call with the next element as same element(1 freq.) cannot we used again
+            dfs(i+1, cur, tot + nums[i])
 
-            while i < len(nums) -1 and nums[i] == nums[i+1]:
+            cur.pop()   
+            # Loop to filter out all duplicates of current i
+
+            # [0,1,1,1,1] for cases like this we need to iterate till there's at least one more element in the arr
+            while (i+1) < len(nums) and nums[i+1] == nums[i]:
                 i += 1
             
-            baxk(i+1, total)
+            dfs(i+1, cur, tot)
 
-        baxk(0, 0)
+        dfs(0, [], 0)
         return res
+
+
+
+        # O(n.2^n)
+        # O(n)
