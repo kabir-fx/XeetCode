@@ -1,0 +1,35 @@
+class Solution:
+    def minOperations(self, boxes: str) -> List[int]:
+        # First Do DRY run \ Refer 238
+        
+        # Intuition is to use a prefix aray which will cumilate the sum after 2 iterations
+        balls, moves = 0, 0
+
+        res = [0] * len(boxes)
+        nums = [int(n) for n in boxes]
+
+        # For the first iteration we will do a forward pass which will consist of appending the values of the array with sum of b and m, where m is the sum of prev b,m and b +/- 1 depending upon the boxes  
+        for i in range(len(nums)):
+            res[i] = balls + moves
+
+            moves = balls + moves
+            # Updated later in order to maintain correct value for moves
+            balls += 1 if nums[i] else 0
+        
+        # For 2 iteration we do a backward pass where we refresh the value of b and m and add on the existing values of res, rest the method is same.
+        balls, moves = 0, 0
+
+        for i in reversed(range(len(nums))):
+            res[i] += balls + moves
+
+            moves = balls + moves
+            balls += 1 if nums[i] else 0
+        
+        return res
+
+
+
+
+
+        # O(n)
+        # O(n) / O(1)
