@@ -1,0 +1,22 @@
+class Solution:
+    def stringMatching(self, words: List[str]) -> List[str]:
+        # Intuition is to simply use O(n^2) approach where we compare each element with every other element in the array; This can be further optimized minimally by using Rabin Karp Alog. leading to ---> O(n^2.L) sol.
+        res = []
+
+        for i in words:
+            for j in words:
+                # Skip the case where we compare the element with itself
+                if i == j:
+                    continue
+                
+                if i in j:
+                    res.append(i)
+                    break
+                
+        return res
+
+
+
+
+        # O(n^2.L^2): L^2 for "in" operator
+        # O(n)
