@@ -1,0 +1,21 @@
+class Solution:
+    def minimumLength(self, s: str) -> int:
+        # We are supposed the return MIN length of the final string after all the operations
+
+        # Intuition: after finding the count of all num its observed that all char either minimize to 1 or 2. All the even char -> 2 and odd -> 1, as we hv to remove 2 char at a time
+        res = 0
+        cnt = Counter(s)
+
+        for v in cnt.values():
+            # If net count is even removing 2 multiple times will result the len of final str to be 2, hence that is added.
+            if v%2 == 0:
+                res += 2
+            else:
+                res += 1
+        
+        return res
+
+
+
+        # O(n)
+        # O(n)
