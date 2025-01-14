@@ -1,0 +1,23 @@
+class Solution:
+    def findThePrefixCommonArray(self, A: List[int], B: List[int]) -> List[int]:
+        # Intuituon is to use a common Hash Set to store all the elements that hv occured in both the arrays. We use a prev varaible coz the sum of all the prefixes from at any point will be MIN -> equal to the sum before it.
+
+        # We then increment it each time whenever we find a match in either of the arrays, appending lastly to res.
+        
+        s = set()
+        res = []
+        prev = 0
+
+        for i in range(len(A)):
+            if s and A[i] in s:
+                prev += 1
+            else:
+                s.add(A[i])                
+            if s and B[i] in s:
+                prev += 1
+            else:
+                s.add(B[i])                
+            
+            res.append(prev)
+
+        return res
