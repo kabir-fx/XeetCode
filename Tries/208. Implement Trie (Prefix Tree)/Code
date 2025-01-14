@@ -1,0 +1,62 @@
+# Intuition is to create a tree which holds: 1- ends boolean, 2- hashmap which holds the reference to all the Nodes of its children. We cannot use pointers as it would require the parfent class to hold 26 next pointers.
+
+# For each HAshmap we have:
+    # {'a': TreeNode(),
+    #  'b': TreeNode(),
+    #  .
+    #  . }
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.ends = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        cur = self.root
+
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+        
+        # Marking the last char as True which wil indicate its the end of the word
+        cur.ends = True
+
+    def search(self, word: str) -> bool:
+        cur = self.root
+
+        for c in word:
+            if c not in cur.children:
+                return False
+            
+            cur = cur.children[c]
+        
+        # Only return True if the ends attribute of the last char is True 
+        return cur.ends
+
+    def startsWith(self, prefix: str) -> bool:
+        cur = self.root
+
+        for c in prefix:
+            if c not in cur.children:
+                return False
+            
+            cur = cur.children[c]
+        
+        return True
+
+
+
+
+    # O(n)
+    # O(n)
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
