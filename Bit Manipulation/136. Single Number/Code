@@ -1,0 +1,17 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        # Intuition: a ^(XOR) 0 = a, i.e every no. xor with 0 is equal to the no. itself; Also if we take 3 no out of which 2 are similar we observe after XOR that the resultant is always equal to unique no.
+
+        # Since there is only one unique no in the ques, we xor it with all the n.
+        res = 0
+
+        for n in nums:
+            res = res ^ n
+        
+        return res
+
+    
+
+
+# O(n)
+# O(1)
