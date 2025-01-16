@@ -1,0 +1,26 @@
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        # Refer 191 for Cech.
+        res = []
+
+        for i in range(n+1):
+            res.append(self.cech(i))
+
+        return res
+
+    def cech(self, n) -> int:
+        res = 0
+
+        while n:
+            res += n & 1
+            n = n >> 1
+        
+        return res
+
+    
+
+
+
+
+    # O(n)
+    # O(n)
