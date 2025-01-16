@@ -1,21 +1,20 @@
-## Approach 1
 class Solution:
     def hammingWeight(self, n: int) -> int:
+        # Intuition is to and the last digit of every iteration of the no, until it decomposes to 0.
         res = 0
 
+        # Runs until n = 0
         while n:
+            # & 1: First converts the no to binary and then performs the and operation with last digit(LSD).
             res += n & 1
+            # Right shifts the BINARY digit to 1 space
             n = n >> 1
         
         return res
 
-## Appraoch 2
-class Solution:
-    def hammingWeight(self, n: int) -> int:
-        res = 0
 
-        while n:
-            n &= n - 1
-            res += 1
-        
-        return res
+
+
+
+    # O(32) ---> O(1)
+    # O(1)
