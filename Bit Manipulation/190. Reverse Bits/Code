@@ -1,0 +1,20 @@
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        # Intuition is to for each iteration in range 32: Left shift the res and append to it AND of n & 1, on the same loop right shifting the n        
+        res = 0
+
+        for i in reversed(range(32)):
+            # On the same operation: LEFT Shift res and append to it the result of &
+            res = (res << 1) | (n & 1)
+            # RIGHT Shift n
+            n = n >> 1
+        
+        return res
+
+
+
+
+
+
+    # O(32) -> O(1)
+    # O(1)
