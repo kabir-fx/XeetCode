@@ -1,0 +1,55 @@
+class Solution:
+    def trapRainWater(self, hm: List[List[int]]) -> int:
+        # Multi - Source BFS
+        # Intuition is to maintain a min heap which will be traversed from min -> max val. The differenve b/w the mx ht and current ht is then appended to res stating that water will be filled at that position.
+
+        # This works as going from min -> mx confirms that the water level up until that point is only going to be equal or lesser than the current max.
+        
+        ROWS, COLS = len(hm), len(hm[0])
+        # No need to heapify as its currently empty
+        min_heap = []
+
+        # Appending all the border elements as well as marking them as visited
+        for r in range(ROWS):
+            for c in range(COLS):
+                # Checking whether the row or col are present in either 0 or last(border)
+                if r in [0, ROWS-1] or c in [0, COLS-1]:
+                    heappush(min_heap, (hm[r][c], r, c))
+                    # Visited
+                    hm[r][c] = -1
+        
+        # Maintain highest ht to determine the water filled in each position upto the current point
+        mx_ht, res = 0, 0
+
+        # Traversing all the elements from min -> max and appending the diff to res
+        while min_heap:
+            h, r, c = heappop(min_heap)
+            # Updating the max
+            mx_ht = max(mx_ht, h)
+
+            # Apeending the difference of the max_ht and current as to determine whether the water will be filled in the current position with respect to the max filled water until now
+            res += mx_ht - h
+
+            # Determining all the possible neighbours of the current element
+            neighbours = [[r+1, c], [r-1, c], [r, c+1], [r, c-1]]
+
+            # Traversing each neighbour to append the remaining elemnets(middle row)  to the Priority Queue->
+            for r,c in neighbours:
+                # Removing all invalid values as well visited elements
+                if r < 0 or c < 0 or r == ROWS or c == COLS or hm[r][c] == -1:
+                    continue
+                else:
+                    heappush(min_heap, (hm[r][c], r,c))
+                    # Marking the appended element as visited
+                    hm[r][c] = -1
+
+        return res
+
+
+
+
+
+
+
+# O(n.m.log(n.m))     (lognm coz of heap push and pop)
+# O(n)
