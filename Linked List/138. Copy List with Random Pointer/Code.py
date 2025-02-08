@@ -9,39 +9,24 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        # Intuition is to use a Hashmap which will store all the orignal node along with their copies so that in the 2 iteration we can just look up the node being pointed to head.random and assign it our copy.random linked list.
-        orig_copy = {}
+        node_cp = {None: None}
 
         cur = head
-        copy = Node(-1)
-        cure = copy
+        h2 = ListNode()
 
         while cur:
-            copy.next = Node(cur.val)
-            copy = copy.next
-
-            orig_copy[cur] = copy
+            node = ListNode(cur.val)
+            node_cp[cur] = node
 
             cur = cur.next
 
-        copy = cure.next
         cur = head
-
         while cur:
-            if cur.random:
-                copy.random = orig_copy[cur.random]
-            else:
-                copy.random = None
+            h2 = node_cp[cur]
 
-            copy = copy.next
+            h2.next = node_cp[cur.next]
+            h2.random = node_cp[cur.random]
+
             cur = cur.next
-
-        return cure.next
-
-
-
-
-
-
-# O(n)
-# O(n)
+        
+        return node_cp[head]
