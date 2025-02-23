@@ -6,13 +6,21 @@
 #         self.right = right
 class Solution:
     def buildTree(self, p: List[int], i: List[int]) -> Optional[TreeNode]:
+        # In Pre-order [R-LF-RT] first element is always the root, in post-orrder [LF, R, RT] root divides the list into LEft and Right portions.
         if not p or not i:
             return None
         
         root = TreeNode(p[0])
         mid = i.index(p[0])
 
-        root.left = self.buildTree(p[1:mid+1], i[:mid])
-        root.right = self.buildTree(p[mid+1:], i[mid+1:])
+        # The mid index in Post determines how many elements are present in the LEft side of the tree which can be utilized to determine how many elements are present in the LEft portion of Pre-order list.
+        root.left = self.buildTree(p[1:mid+1], i[:mid]) 
+        root.right = self.buildTree(p[mid+1:], i[mid+1:]) 
 
         return root
+
+
+
+
+# O(n^2): >>>>>>>>> n for visiting all nodes x n for index function
+# O(n)
