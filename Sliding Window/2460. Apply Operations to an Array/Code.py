@@ -22,7 +22,7 @@ class Solution:
 
 
         # This is approach changes the array in place using Quick sort principles.
-        # Here, l tracks the non - zero no and keeps shifting with the i pointer whenever a new NZ element is found but stays there if i is zero. Whenever i again becomes NZ is exhanges its values and increments by 1.
+        # Here, l tracks the non - zero no and keeps shifting with the i pointer whilst also exchanging(will be same values for both i and l until first NZ is found) there values whenever a new NZ(non-zero) element is found but stays there if i is zero. Whenever i again becomes NZ is exhanges its values and increments by 1.
         # This ensures if there is ever a NZ element present after the exhange it will be exchanged again with i.
         l = 0
         for i in range(len(nums)):
