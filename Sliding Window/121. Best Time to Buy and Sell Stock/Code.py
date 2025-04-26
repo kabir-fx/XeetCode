@@ -1,19 +1,16 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # Intuition: use a 2 pointer approach intialized at 0 and 1, increment l only when a value lower than l is found at r.
+        l = 0
         res = 0
 
-        l,r = 0, 1
+        for r in range(1, len(prices)):
+            profit = prices[r] - prices[l]
+            
+            res = max(res, profit)
 
-        while r < len(prices):
-            res = max(res, prices[r] - prices[l])
-
-            if prices[l] > prices[r]:
-                l = r
-                r += 1
-            else:
-                r += 1
-
+            if prices[l] > prices[r]: l = r
+        
         return res
 
 
