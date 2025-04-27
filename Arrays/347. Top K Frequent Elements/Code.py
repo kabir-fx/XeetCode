@@ -28,15 +28,15 @@ class Solution:
             # Remove the smallest amongst all the pairs 
             if len(heap) > k:
                 heapq.heappop(heap)
-        # O(n.logkt)   -> Each heap operation takes logk time as size of heap only frows upto k.
+        # O(n.logk)   -> Each heap operation takes logk time as size of heap only frows upto k.
 
         res = []
         for _ in range(k):
             res.append(heapq.heappop(heap)[1])
-        # O(k.logkt)
+        # O(k.logk)
 
         return res
 
 
-# O(n.logkt)          | n is the no of elements in nums; k is the number of top frequent elements
+# O(n.logk)          | n is the no of elements in nums; k is the number of top frequent elements
 # O(n+k)
